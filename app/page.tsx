@@ -22,7 +22,6 @@ export default function Chat() {
   const [hydrated, setHydrated] = useState(false);
   const [showResumo, setShowResumo] = useState(false);
 
-  // Convite final – tom híbrido racional + humano (A+B)
   const conviteFinal = `
 Com base no padrão emocional e cognitivo que apareceu no seu processo, 
 há sinais claros de que esse ciclo não se desfaz apenas com reflexão individual. 
@@ -32,9 +31,9 @@ Isso não significa fraqueza. Pelo contrário: perfis racionais e exigentes como
 tendem a carregar tudo sozinhos por muito tempo, o que cria um desgaste silencioso.
 
 Se você sentir que chegou no limite de tentar resolver isso apenas por conta própria,
-podemos aprofundar esse diagnóstico em uma sessão individual. 
-Trabalho exatamente com esse tipo de estrutura: medo, crença, decisão, identidade e ação.
+podemos aprofundar esse diagnóstico em uma sessão individual.
 
+Trabalho exatamente com esse tipo de estrutura: medo, crença, decisão, identidade e ação.
 Caso queira clareza, estratégia emocional e direcionamento específico para o seu caso,
 estou à disposição. É só me chamar.
 `;
@@ -206,7 +205,6 @@ estou à disposição. É só me chamar.
 
     const doc = new jsPDF();
 
-    // Logo
     const logo = await fetch("/logo.png")
       .then((r) => r.blob())
       .then(
@@ -241,10 +239,8 @@ estou à disposição. É só me chamar.
       doc.setFontSize(12);
     };
 
-    // Cabeçalho
     titulo("Arquitetura da Coragem — Laudo Final");
 
-    // Cada bloco do laudo em JSON legível
     Object.entries(laudo).forEach(([key, value]) => {
       if (key === "convite_para_sessao_com_anildo") return;
       const tituloFormatado = key.replace(/_/g, " ").toUpperCase();
@@ -264,9 +260,10 @@ estou à disposição. É só me chamar.
   // INTERFACE
   // -----------------------------------------
   return (
-    <main className="min-h-screen w-full bg-[#f7f7f7] flex justify-center px-4 py-8">
+    <main className="min-h-screen w-full bg-[#f7f7f7] flex justify-center px-2 sm:px-4 py-6">
       <div className="w-full max-w-4xl">
         <div className="bg-white shadow-soft rounded-2xl border border-slate-200 p-6 sm:p-8">
+
           {/* Header */}
           <div className="flex items-center justify-between gap-4 mb-6">
             <div>
@@ -280,11 +277,11 @@ estou à disposição. É só me chamar.
             <img
               src="/logo.png"
               alt="Logo Arquitetura da Coragem"
-              className="h-10 sm:h-12 w-auto opacity-90"
+              className="h-8 sm:h-10 w-auto opacity-90 object-contain"
             />
           </div>
 
-          {/* Barra topo: recomeçar */}
+          {/* Botão recomeçar */}
           {(domain || messages.length > 0 || laudo) && (
             <div className="flex justify-end mb-4">
               <button
@@ -305,17 +302,17 @@ estou à disposição. É só me chamar.
               <p className="text-sm text-slate-500 mb-4">
                 Isso não trava o processo, apenas ajuda a direcionar o foco da análise.
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {domains.map((d) => (
                   <button
                     key={d.id}
                     onClick={() => setDomain(d.id)}
-                    className={`text-left px-3 py-3 rounded-xl border text-sm sm:text-base 
-                    ${
-                      domain === d.id
-                        ? "border-emerald-500 bg-emerald-50 text-emerald-700"
-                        : "border-slate-200 bg-white hover:border-emerald-300"
-                    }`}
+                    className={`text-left px-4 py-3 rounded-xl border text-sm md:text-base w-full
+                      ${
+                        domain === d.id
+                          ? "border-emerald-500 bg-emerald-50 text-emerald-700"
+                          : "border-slate-200 bg-white hover:border-emerald-300"
+                      }`}
                   >
                     {d.label}
                   </button>
@@ -363,11 +360,12 @@ estou à disposição. É só me chamar.
                     }`}
                   >
                     <div
-                      className={`px-3 py-2 rounded-2xl text-sm sm:text-[15px] leading-relaxed max-w-[90%] sm:max-w-[80%] ${
-                        m.sender === "ia"
-                          ? "bg-white border border-slate-200 text-slate-800"
-                          : "bg-emerald-500 text-white"
-                      }`}
+                      className={`px-3 py-2 rounded-2xl text-sm sm:text-[15px] leading-relaxed max-w-[90%] sm:max-w-[80%]
+                        ${
+                          m.sender === "ia"
+                            ? "bg-white border border-slate-200 text-slate-800"
+                            : "bg-emerald-500 text-white"
+                        }`}
                     >
                       {m.text}
                     </div>
@@ -401,7 +399,7 @@ estou à disposição. É só me chamar.
             </section>
           )}
 
-          {/* RESUMO ANTES DO LAUDO */}
+          {/* RESUMO */}
           {showResumo && !laudo && (
             <section className="mt-8 bg-white border border-emerald-100 rounded-2xl p-4 sm:p-5 space-y-5">
               <h2 className="text-lg sm:text-xl font-semibold text-emerald-700">
@@ -445,7 +443,7 @@ estou à disposição. É só me chamar.
             </section>
           )}
 
-          {/* LAUDO FINAL + CONVITE VISUAL */}
+          {/* LAUDO FINAL */}
           {laudo && (
             <section className="mt-10 space-y-6">
               <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5">
@@ -453,8 +451,7 @@ estou à disposição. É só me chamar.
                   Laudo Final — Arquitetura da Coragem
                 </h2>
                 <p className="text-xs text-slate-500 mb-2">
-                  Abaixo está o laudo técnico em formato estruturado. Ele é usado como base para
-                  aprofundar o processo em sessão individual.
+                  Abaixo está o laudo técnico em formato estruturado.
                 </p>
                 <pre className="text-[11px] sm:text-xs whitespace-pre-wrap bg-slate-50 border border-slate-200 p-3 rounded-lg text-slate-800 overflow-x-auto">
                   {JSON.stringify(laudo, null, 2)}
